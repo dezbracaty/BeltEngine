@@ -240,6 +240,12 @@ def main():
         if not key.startswith("blackbelt_"):
             engine_args.extend(["-s", "%s=%s" % (key, value)])
 
+    # material_diameter is settable_per_extruder in Cura definitions.
+    # Pass it explicitly in extruder context to avoid fallback to definition defaults (e.g. 2.85).
+    material_diameter = settings_parser.getSettingValue("material_diameter")
+    if material_diameter is not None:
+        engine_args.extend(["-e0", "-s", "material_diameter=%s" % material_diameter])
+
     engine_args.extend(["-l", temp_mesh_file_path])
 
 
